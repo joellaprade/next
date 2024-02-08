@@ -26,8 +26,8 @@ app.use(session({
 
 
 app.get('/', (req, res) => {
-    console.log(req.sessionID)
-    res.send(200)
+    // console.log(req.sessionID)
+    // res.send(200)
     //res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
 })
 
@@ -40,20 +40,8 @@ app.get('/manage', (req, res) => {
 })
 
 app.get('/test', async (req, res) => {
-    await new User({
-        title: "title3",
-        day: 3,
-        start: {
-            hour: 17,
-            minute: 0
-        },
-        end: {
-            hour: 18,
-            minute: 30
-        },
-        tag: "31700",
-    }).save()
-    res.status(200).end('e')
+    console.log(req.sessionID)
+    res.send(200)
 })
 
 
