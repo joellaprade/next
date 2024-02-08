@@ -5,6 +5,8 @@ const User = require('./models/user')
 const app = express();
 const port = 8000;
 const date = new Date()
+//const baseDir = `/home/jlaprade/next.jlaprade.com/`;
+const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
 
 const dbURI = 'mongodb+srv://joellaprade:otrXifxg5qxYypK0@nextcluster.gmdlrli.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(dbURI)
@@ -13,7 +15,7 @@ mongoose.connect(dbURI)
         console.log('listening' + String(date.getHours()+1) + ":" + String(date.getMinutes()))
     })
 
-
+app.use(express.static(baseDir));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(session({
@@ -29,19 +31,14 @@ basicamente, vemos el estado de auth, y dependeindo de este le mandamos un login
 */
 
 app.get('/', (req, res) => {
-    // console.log(req.sessionID)
-    // res.send(200)
-    //res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
-    res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
+    res.sendFile(`${baseDir}index.html`);
 })
 
 app.get('/registrarse', (req, res) => {
-    res.sendFile('/home/jlaprade/next.jlaprade.com/register/register.html');
+    res.sendFile(`${baseDir}register/register.html`);
 })
 
 app.post('/create-user', async (req, res) => {
-    console.log('fired '+ req.body.username);
-    console.log('fired '+ req);
     await new User({
         credentials: {
             username: req.body.username,
@@ -51,7 +48,6 @@ app.post('/create-user', async (req, res) => {
         },
         events: []
     }).save()
-    console.log(req.sessionID)
     res.send(200)
 })
 
@@ -75,33 +71,7 @@ app.post('/create-event', async (req, res) => {
 })
 
 app.get('/administrar-tareas', (req, res) => {
-    res.sendFile('/home/jlaprade/next.jlaprade.com/manage-events/manage-events.html');
-})
-
-app.get('/test', async (req, res) => {
-    await new User({
-        credentials: {
-            username: 'jlaprade',
-            password: 'today2428',
-            cookie: 'eiodfjgposdfg',
-            authenticated: 'false'
-        },
-        events: [{
-            title: 'Evento 1',
-            day: 1,
-            start: {
-                hour: 8,
-                minute: 30
-            },
-            end: {
-                hour: 9,
-                minute: 0
-            },
-            tag: '232352'
-        }]
-    }).save()
-    console.log(req.sessionID)
-    res.send(200)
+    res.sendFile(`${baseDir}manage-events/manage-events.html`)
 })
 
 

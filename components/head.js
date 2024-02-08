@@ -1,8 +1,7 @@
-document.querySelector('head').innerHTML += `<link rel="stylesheet" href="/global/global.css">
+document.querySelector('head').innerHTML += `<link rel="stylesheet" href="../global/global.css">
                                             <link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
                                             <link rel="preconnect" href="https://fonts.googleapis.com">
                                             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                                            <link href="" rel="stylesheet">
                                             <meta charset="UTF-8">
                                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -53,6 +52,3 @@ document.querySelector('head').innerHTML += `<link rel="stylesheet" href="/globa
 
 
 `
-
-//width="28" height="4"  fill="none"
-//viewBox="0 0 28 4" 
