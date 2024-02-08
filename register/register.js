@@ -14,16 +14,16 @@ const setValues = () => {
     return modelo;
 }
 
-const postNewUser = async (e) => {
-    e.preventDefault();
-    const req = await fetch(baseUrl+'create-user',
-    {
-        method: 'POST',
-        headers: {
-            "Content-Type": 'application/json'
-        },
-        body: JSON.stringify(setValues())
-    })
-}
+// const postNewUser = async (e) => {
+//     e.preventDefault();
+//     const req = await fetch(baseUrl+'create-user',
+//     {
+//         method: 'POST',
+//         headers: {
+//             "Content-Type": 'application/json'
+//         },
+//         body: JSON.stringify(setValues())
+//     })
+// }
 
-submitButton.addEventListener('click', setValues)
+// submitButton.addEventListener('click', setValues)
