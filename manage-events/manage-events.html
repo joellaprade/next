@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="./components/head.js"></script>
+    <link rel="stylesheet" href="./manage-events/manage-events.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <section id="form-section">
+        <nav id="nav">
+            <svg viewBox="0 0 27 45" class="back-arrow-icon">
+                <a href="/">
+                    <use href="#back-arrow"></use>
+                </a>
+            </svg>
+        </nav>
+        <script src="./components/nav.js"></script>
+        <p class="form-title">Agregar Evento</p>
+        <form class="create-event">
+            <input class="event-title field" type="text" name="event-title" id="event-title" placeholder="T&iacute;tulo del Evento . . .">
+            <select class="event-day field" name="event-day" id="event-day">
+                <option value="0">Lunes</option>
+                <option value="1">Martes</option>
+                <option value="2">Mi&eacute;rcoles</option>
+                <option value="3">Jueves</option>
+                <option value="4">Viernes</option>
+                <option value="5">S&aacute;bado</option>
+                <option value="6">Domingo</option>
+            </select>
+            <div class="event-time field">
+                <label for="start-time">Hora Inicial</label>
+                <div class="start-time">
+                    <input class="event-start-minute" type="number" name="event-start-hour" id='event-start-hour' placeholder="00">
+                    <p>:</p>
+                    <input class="event-start-hour" type="number" name="event-start-minute" id='event-start-minute'  placeholder="00">
+                    <select name="am-pm" id="am-pm">
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label for="">Hora Final</label>
+                <div class="container">
+                    <svg viewBox="0 0 49 49" class="plus-icon" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24.5 3L24.5 46" stroke="#E7E7E7" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M3 24.5H46" stroke="#E7E7E7" stroke-width="5" stroke-linecap="round"/>
+                    </svg>
+                    <div class="end-time">
+                        <input class="event-end-minute" type="number" name="event-end-hour" id='event-end-hour' placeholder="00">
+                        <p> : </p>
+                        <input class="event-end-hour" type="number" name="event-end-minute" id='event-end-minute'  placeholder="00">
+                        <select name="am-pm" id="am-pm">
+                            <option value="am">am</option>
+                            <option value="pm">pm</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button id="submit">Agregar</button>
+        </form>
+    </section>
+
+    <section id="tasks">
+        <select class="days" name="days" id="days">
+            <option value="0">Lunes</option>
+            <option value="1">Martes</option>
+            <option value="2">Mi&eacute;rcoles</option>
+            <option value="3">Jueves</option>
+            <option value="4">Viernes</option>
+            <option value="5">S&aacute;bado</option>
+            <option value="6">Domingo</option>
+        </select>
+        <div class="task-list-wrapper">
+            <div class="gradient-top"></div>
+            <div class="task-list">
+            </div>
+            <div class="gradient-bottom"></div>
+        </div>
+    </section>
+
+    <footer id="footer"></footer>
+    <script src="./components/footer.js"></script>
+
+    <script src="./global/global.js"></script>
+    <script src="./manage-events/manage-events.js"></script>
+</body>
+</html>

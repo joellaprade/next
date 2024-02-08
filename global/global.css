@@ -1,0 +1,178 @@
+:root {
+    /*shrink hace que al disminuir el tamano de la pantalla, en ves de un elemento X mantener el mismo tamaño (el cual seria relativamente mas grande en una pantalla mas pequeña), se redusca en relacion a la reduccion de la pantalla (orientacion X) pero en menor intensidad (20 siendo menos y 80 mas) */
+    --shrink80: calc(1px - (1920px - 100vw) * 0.000526);
+    --shrink60: calc(1px - (1920px - 100vw) * 0.000395);
+    --shrink40: calc(1px - (1920px - 100vw) * 0.000263);
+    --shrink20: calc(1px - (1920px - 100vw) * 0.00018);
+    --grow40: calc(1px + (1920px - 100vw) * 0.000263);
+    /*dynamic font size*/
+    --twentyPx: calc(20 * var(--shrink40));
+    --thirtyPx: calc(30 * var(--shrink40));
+    --fiftyPx: calc(50 * var(--shrink40));
+}
+
+* {
+    margin: 0px;
+
+    color: #e7e7e7;
+    font-family: 'Poppins', sans-serif;
+    font-size: var(--thirtyPx);
+    font-weight: 500;
+    line-height: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #181818;
+}
+
+input {
+    background-color: #181818;
+    border: none;
+    outline: none;
+    border-radius: 0px;
+
+    font-weight: 600;
+}
+
+select {
+    background-color: #181818;
+    border: none;
+    outline: none;
+    border-radius: 0px;
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: calc(var(--shrink40) * 25) calc(var(--shrink40) * 50);
+
+    box-sizing: border-box;
+}
+
+
+
+
+/* ICONS */
+
+.plus-icon {
+    width: calc(var(--shrink40) * 49);
+    height: calc(var(--shrink40) * 49);
+}
+
+.check-icon {
+    width: calc(var(--shrink40) * 60);
+    height: calc(var(--shrink40) * 50);
+}
+
+.loading-icon {
+    width: calc(var(--shrink40) * 60);
+    height: calc(var(--shrink40) * 60);
+}
+
+.loading-icon > * {
+    width: calc(var(--shrink40) * 60);
+    height: calc(var(--shrink40) * 60);
+}
+
+.back-arrow-icon {
+    width: calc(var(--shrink40) * 27);
+    height: calc(var(--shrink40) * 45);
+}
+
+.edit-icon {
+    height: calc(var(--shrink40) * 100);
+    transition: opacity 0.3s ease-in-out;
+
+}
+
+.edit-icon * {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.delete-icon {
+    width: calc(var(--shrink40) * 100);
+    margin-left: 20px;
+
+    transition: opacity 0.3s ease-in-out;
+}
+
+.delete-icon * {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.user-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: calc(var(--shrink40) * 75);
+    aspect-ratio: 1/1;
+
+    border: calc(var(--shrink40) * 6) solid white;
+    border-radius: 100px;
+}
+
+.user-avatar span {
+    font-size: var(--fiftyPx);
+}
+
+
+
+/* TEMP */
+
+.half-opacity {
+    opacity: 0.5;
+}
+
+
+
+/* TOOLS */
+
+.outline {
+    outline: 1px solid gray;
+}
+
+
+/* DESKTOP ONLY */
+
+@media screen and (width >= 960px){
+
+}
+
+/* MOBILE ONLY */
+
+@media screen and (width < 960px){
+
+}
+
+
+
+
+/* ANIMATIONS */
+
+.rotate1 {
+    animation: rotate;
+    animation-timing-function: linear;
+    animation-duration: 4.5s;
+    animation-iteration-count: infinite;
+}
+
+.rotate2 {
+    animation: rotate;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rotate{
+    0% {transform: rotate(0deg); transform-origin: 50% 50%;}
+    50% {transform: rotate(180deg); transform-origin: 50% 50%;}
+    100% {transform: rotate(360deg); transform-origin: 50% 50%;}
+}

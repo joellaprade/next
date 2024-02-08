@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../components/head.js"></script>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Tasks</title>
+</head>
+<body>
+
+    <section id="task-page">
+        <nav id="nav">
+            <div class="user-avatar">
+                <span>J</span>
+            </div>
+            <svg viewBox="0 0 49 49" class="plus-icon">
+                <a href="/manage">
+                    <use href="#plus"></use>
+                </a>
+            </svg>
+        </nav>
+        <script src="../components/nav.js"></script>
+        <select class="days" name="days" id="days">
+            <option value="0">Lunes</option>
+            <option value="1">Martes</option>
+            <option value="2">Mi&eacute;rcoles</option>
+            <option value="3">Jueves</option>
+            <option value="4">Viernes</option>
+            <option value="5">S&aacute;bado</option>
+            <option value="6">Domingo</option>
+        </select>
+        <div class="task-list-wrapper">
+            <div class="gradient-top"></div>
+            <div class="task-list">
+            </div>
+            <div class="gradient-bottom"></div>
+        </div>
+    </section>
+
+    <footer id="footer"></footer>
+    <script src="../components/footer.js"></script>
+
+    <script src="../global/global.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>
