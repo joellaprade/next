@@ -23,15 +23,15 @@ app.use(session({
 }))
 
 
-
+/*
+hacer el authentication en cada request, y hacerlo antes de mandar lo que sea
+basicamente, vemos el estado de auth, y dependeindo de este le mandamos un login o el index.html
+*/
 
 app.get('/', (req, res) => {
     // console.log(req.sessionID)
     // res.send(200)
     //res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
-})
-
-app.get('tasks', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
 })
 
@@ -40,7 +40,16 @@ app.get('/manage', (req, res) => {
 })
 
 app.get('/test', async (req, res) => {
-    await new User({
+    
+    console.log(req.sessionID)
+    res.send(200)
+})
+
+
+
+
+/*
+await new User({
         credentials: {
             username: 'jlaprade',
             password: 'today2428',
@@ -61,62 +70,4 @@ app.get('/test', async (req, res) => {
             tag: '232352'
         }
     }).save()
-    console.log(req.sessionID)
-    res.send(200)
-})
-
-
-
-
-/*
-
-{
-    credentials: {
-        username: 'jlaprade',
-        password: 'today2428',
-        cookie: 'eiodfjgposdfg',
-        authenticated: 'false'
-    },
-    events: {
-        title: 'Evento 1',
-        day: 1,
-        start: {
-            hour: 8,
-            minute: 30
-        },
-        end: {
-            hour: 9,
-            minute: 0
-        },
-        tag: '232352'
-    }
-}
-
 */
-
-/*
-await new User(
-    
-    {
-        title: "title3",
-        day: 3,
-        start: {
-            hour: 17,
-            minute: 0
-        },
-        end: {
-            hour: 18,
-            minute: 30
-        },
-        tag: "31700",
-    }).save()
-    res.status(200).end('e')
-*/
-
-
-
-
-
-
-//insalar dependencies (sessions, mongoose, express)
-//codear los fundamentos (conexion a db, middleware, ver como tengo ambos folders en next.jlaprade.com)
