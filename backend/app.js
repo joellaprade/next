@@ -45,7 +45,7 @@ app.get('/create-user', async (req, res) => {
             username: 'placeholder',
             password: 'placeholder',
             cookie: 'placeholder',
-            authenticated: 'placeholder'
+            authenticated: false
         },
         events: []
     }).save()
