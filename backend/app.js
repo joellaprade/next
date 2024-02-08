@@ -35,7 +35,6 @@ app.get('/test', async (req, res) => {
             minute: 30
         },
         tag: "31700",
-        id: 3
     }).save()
     res.status(200).end('e')
 })

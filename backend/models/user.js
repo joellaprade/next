@@ -7,11 +7,11 @@ const userSchema = new Schema({
     events: {
         title: String,
         day: Number,
-        starts: {
+        start: {
             hour: Number,
             minute: Number
         },
-        ends: {
+        end: {
             hour: Number,
             minute: Number
         },
