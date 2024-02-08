@@ -16,7 +16,7 @@ const setValues = () => {
 
 const postNewUser = async (e) => {
     e.preventDefault();
-    const req = await fetch(baseUrl+'create-user',
+    const req = await fetch(baseUrl + 'create-user',
     {
         method: 'POST',
         headers: {
@@ -26,4 +26,4 @@ const postNewUser = async (e) => {
     })
 }
 
-submitButton.addEventListener('click', setValues)
+submitButton.addEventListener('click', postNewUser)
