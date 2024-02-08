@@ -67,8 +67,8 @@ app.get('/create-event', async (req, res) => {
             minute: 0
         },
         tag: '232352'
-    })
-
+    }).save();
+    res.send(200)
 })
 
 app.get('/administrar-tareas', (req, res) => {
