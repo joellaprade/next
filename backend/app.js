@@ -39,7 +39,7 @@ app.get('/registrarse', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/register/register.html');
 })
 
-app.post('/create-user', async (req, res) => {
+app.get('/create-user', async (req, res) => {
     await new User({
         credentials: {
             username: 'placeholder',
