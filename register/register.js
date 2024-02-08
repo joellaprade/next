@@ -1,5 +1,4 @@
-var username = document.querySelector('#username')
-var password = document.querySelector('#password')
+
 var submitButton = document.querySelector('#submit')
 
 var modelo = {
@@ -8,6 +7,9 @@ var modelo = {
 }
 
 const setValues = () => {
+    var username = document.querySelector('#username')
+    var password = document.querySelector('#password')
+
     modelo.username = username.value;
     modelo.password = password.value;
 
@@ -26,4 +28,4 @@ const postNewUser = async (e) => {
     })
 }
 
-submitButton.addEventListener('click', postNewUser)
+submitButton.addEventListener('click', e => postNewUser(e))
