@@ -2,8 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: String,
-    password: String,
+    credentials: {
+        username: String,
+        password: String,
+        cookie: String,
+        authenticated: Boolean
+    },
     events: {
         title: String,
         day: Number,

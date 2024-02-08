@@ -40,6 +40,27 @@ app.get('/manage', (req, res) => {
 })
 
 app.get('/test', async (req, res) => {
+    await new User({
+        credentials: {
+            username: 'jlaprade',
+            password: 'today2428',
+            cookie: 'eiodfjgposdfg',
+            authenticated: 'false'
+        },
+        events: {
+            title: 'Evento 1',
+            day: 1,
+            start: {
+                hour: 8,
+                minute: 30
+            },
+            end: {
+                hour: 9,
+                minute: 0
+            },
+            tag: '232352'
+        }
+    }).save()
     console.log(req.sessionID)
     res.send(200)
 })
@@ -47,9 +68,50 @@ app.get('/test', async (req, res) => {
 
 
 
+/*
 
+{
+    credentials: {
+        username: 'jlaprade',
+        password: 'today2428',
+        cookie: 'eiodfjgposdfg',
+        authenticated: 'false'
+    },
+    events: {
+        title: 'Evento 1',
+        day: 1,
+        start: {
+            hour: 8,
+            minute: 30
+        },
+        end: {
+            hour: 9,
+            minute: 0
+        },
+        tag: '232352'
+    }
+}
 
+*/
 
+/*
+await new User(
+    
+    {
+        title: "title3",
+        day: 3,
+        start: {
+            hour: 17,
+            minute: 0
+        },
+        end: {
+            hour: 18,
+            minute: 30
+        },
+        tag: "31700",
+    }).save()
+    res.status(200).end('e')
+*/
 
 
 
