@@ -1,11 +1,10 @@
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
-const port = 8000;
+const session = require('express-session');
 const User = require('./models/user')
+const app = express();
+const port = 8000;
 const date = new Date()
-
-
 
 const dbURI = 'mongodb+srv://joellaprade:otrXifxg5qxYypK0@nextcluster.gmdlrli.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(dbURI)
@@ -14,7 +13,25 @@ mongoose.connect(dbURI)
         console.log('listening' + String(date.getHours()+1) + ":" + String(date.getMinutes()))
     })
 
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(session({
+    secret: 'jlapraderules',
+    cookie: {maxAge: 30000},
+    saveUninitialized: false
+}))
+
+
+
+
 app.get('/', (req, res) => {
+    console.log(req.sessionID)
+    res.send(200)
+    //res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
+})
+
+app.get('tasks', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
 })
 
@@ -39,8 +56,6 @@ app.get('/test', async (req, res) => {
     res.status(200).end('e')
 })
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
 
 
 
