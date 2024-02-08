@@ -43,7 +43,8 @@ const authenticate = async (req) => {
     }
 }
 
-
+//formalizar la creacion y validacion de cookies
+//asignarlas a usuarios para tener event arrqays distintos
 
 
 app.get('/', (req, res) => {
