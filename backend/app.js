@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const User = require('./models/user')
 const app = express();
 const port = 8000;
@@ -18,20 +18,42 @@ mongoose.connect(dbURI)
 app.use(express.static(baseDir));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(session({
-    secret: 'jlapraderules',
-    cookie: {maxAge: 30000},
-    saveUninitialized: false
-}))
+app.use(cookieParser())
 
 
-/*
-hacer el authentication en cada request, y hacerlo antes de mandar lo que sea
-basicamente, vemos el estado de auth, y dependeindo de este le mandamos un login o el index.html
-*/
+
+
+const createCookie = () => {
+    var year = date.getFullYear().toString();
+    var month = date.getMonth().toString();
+    var day = date.getDay().toString();
+    var hour = date.getHours().toString();
+    var minute = date.getMinutes().toString();
+    var second = date.getSeconds().toString();
+    var random = Math.floor(Math.random()*100).toString();
+    var cookie = year+month+day+hour+minute+second+random;
+    return cookie;
+}
+
+const authenticate = async (req) => {
+    if(req.cookies.id){
+        console.log('exists')
+    }else {
+        console.log('doesnt exists')
+    }
+}
+
+
+
 
 app.get('/', (req, res) => {
-    res.sendFile(`${baseDir}index.html`);
+    authenticate(req);
+    res.cookie('id', createCookie(), {
+        maxAge: 80000000,
+        httpOnly: true,
+        secure: true
+    })
+    res.sendFile(`${baseDir}home.html`);
 })
 
 app.get('/registrarse', (req, res) => {
@@ -74,6 +96,13 @@ app.get('/administrar-tareas', (req, res) => {
     res.sendFile(`${baseDir}manage-events/manage-events.html`)
 })
 
+
+
+
+/*
+hacer el authentication en cada request, y hacerlo antes de mandar lo que sea
+basicamente, vemos el estado de auth, y dependeindo de este le mandamos un login o el index.html
+*/
 
 
 
