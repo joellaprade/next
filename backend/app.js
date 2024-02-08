@@ -39,11 +39,13 @@ app.get('/registrarse', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/register/register.html');
 })
 
-app.get('/create-user', async (req, res) => {
+app.post('/create-user', async (req, res) => {
+    console.log('fired '+ req.body.username);
+    console.log('fired '+ req);
     await new User({
         credentials: {
-            username: 'placeholder',
-            password: 'placeholder',
+            username: req.body.username,
+            password: req.body.password,
             cookie: 'placeholder',
             authenticated: false
         },
@@ -53,7 +55,7 @@ app.get('/create-user', async (req, res) => {
     res.send(200)
 })
 
-app.get('/create-event', async (req, res) => {
+app.post('/create-event', async (req, res) => {
     var user = await User.find();
     user[0].events.push({
         title: 'Evento 1',
