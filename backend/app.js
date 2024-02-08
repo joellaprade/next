@@ -39,6 +39,20 @@ app.get('/registrarse', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/register/register.html');
 })
 
+app.post('/create-user', async (req, res) => {
+    await new User({
+        credentials: {
+            username: 'placeholder',
+            password: 'placeholder',
+            cookie: 'placeholder',
+            authenticated: 'placeholder'
+        },
+        events: []
+    }).save()
+    console.log(req.sessionID)
+    res.send(200)
+})
+
 app.get('/administrar-tareas', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/manage-events/manage-events.html');
 })
