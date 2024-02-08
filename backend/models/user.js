@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-
+//https://stackoverflow.com/questions/33049707/push-items-into-mongo-array-via-mongoose
 const userSchema = new Schema({
     credentials: {
         username: String,
@@ -8,7 +8,7 @@ const userSchema = new Schema({
         cookie: String,
         authenticated: Boolean
     },
-    events: {
+    events: [{
         title: String,
         day: Number,
         start: {
@@ -20,7 +20,7 @@ const userSchema = new Schema({
             minute: Number
         },
         tag: String
-    }
+    }]
 })
 
 const User = mongoose.model('User', userSchema);

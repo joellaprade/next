@@ -44,7 +44,27 @@ app.get('/administrar-tareas', (req, res) => {
 })
 
 app.get('/test', async (req, res) => {
-    
+    await new User({
+        credentials: {
+            username: 'jlaprade',
+            password: 'today2428',
+            cookie: 'eiodfjgposdfg',
+            authenticated: 'false'
+        },
+        events: [{
+            title: 'Evento 1',
+            day: 1,
+            start: {
+                hour: 8,
+                minute: 30
+            },
+            end: {
+                hour: 9,
+                minute: 0
+            },
+            tag: '232352'
+        }]
+    }).save()
     console.log(req.sessionID)
     res.send(200)
 })
@@ -60,7 +80,7 @@ await new User({
             cookie: 'eiodfjgposdfg',
             authenticated: 'false'
         },
-        events: {
+        events: [{
             title: 'Evento 1',
             day: 1,
             start: {
@@ -72,6 +92,6 @@ await new User({
                 minute: 0
             },
             tag: '232352'
-        }
+        }]
     }).save()
 */
