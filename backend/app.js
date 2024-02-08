@@ -35,6 +35,10 @@ app.get('/', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/index.html');
 })
 
+app.get('/registrarse', (req, res) => {
+    res.sendFile('/home/jlaprade/next.jlaprade.com/register/register.html');
+})
+
 app.get('/manage', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/manage-events/manage-events.html');
 })
