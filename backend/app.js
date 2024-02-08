@@ -53,6 +53,24 @@ app.get('/create-user', async (req, res) => {
     res.send(200)
 })
 
+app.get('/create-event', async (req, res) => {
+    var user = await User.find();
+    user[0].events.push({
+        title: 'Evento 1',
+        day: 1,
+        start: {
+            hour: 8,
+            minute: 30
+        },
+        end: {
+            hour: 9,
+            minute: 0
+        },
+        tag: '232352'
+    })
+
+})
+
 app.get('/administrar-tareas', (req, res) => {
     res.sendFile('/home/jlaprade/next.jlaprade.com/manage-events/manage-events.html');
 })
