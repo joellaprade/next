@@ -5,8 +5,8 @@ const User = require('./models/user')
 const app = express();
 const port = 8000;
 const date = new Date()
-// const baseDir = `/home/jlaprade/next.jlaprade.com/`;
-const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
+const baseDir = `/home/jlaprade/next.jlaprade.com/`;
+// const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
 
 const dbURI = 'mongodb+srv://joellaprade:otrXifxg5qxYypK0@nextcluster.gmdlrli.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(dbURI)
@@ -42,36 +42,49 @@ const createCookie = (res) => {
     return cookie;
 }
 
-const authenticate = async (req, res) => {
-    console.log(req.cookies.id)
-    if(req.cookies.id){
-        console.log('ran2')
-        // var users = await User.find();
-        // users.forEach(user => {
-        //     console.log('ran3')
-        //     console.log(user.cookie, req.cookies.id)
-        //     if(user.cookie == req.cookies.id){
-        //         console.log('found');
-        //     }
-        // })
-    }else {
-        res.sendFile(`${baseDir}/register/register.html`)
-        //mandar login html
-        //no necesariament crear el cookie ahi, sino en register
-    }
+const isLogged = async (req) => {
+    var cookie = req.cookies.id;
+    var users = await User.find();
+    var logged = false;
+    users.forEach(user => {
+        if(user.credentials.cookie == cookie && user.credentials.authenticated){
+            logged = true;
+        }
+    })
+    return logged;
 }
-//createCookie(res);
-//formalizar la creacion y validacion de cookies
-//asignarlas a usuarios para tener event arrqays distintos
+const authenticate = async (req) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    var users = await User.find();
+    var authenticated = false
+    users.forEach(user => {
+        if(username == user.credentials.username){
+            if(password == user.credentials.password){
+                authenticated = true;
+            }
+        }
+    })
+    return authenticated;
+}
 
 
-app.get('/', (req, res) => {
-    //authenticate(req, res);
-    res.sendFile(`${baseDir}home.html`);
+
+
+app.get('/', async (req, res) => {
+    if(await isLogged(req)){
+        res.sendFile(`${baseDir}home.html`);
+    }else{
+        res.sendFile(`${baseDir}login/login.html`);
+    }
 })
 
 app.get('/registrarse', (req, res) => {
     res.sendFile(`${baseDir}register/register.html`);
+})
+
+app.get('/ingresar', (req, res) => {
+    res.sendFile(`${baseDir}login/login.html`);
 })
 
 app.post('/create-user', async (req, res) => {
@@ -80,7 +93,7 @@ app.post('/create-user', async (req, res) => {
             username: req.body.username,
             password: req.body.password,
             cookie: createCookie(res),
-            authenticated: false
+            authenticated: true
         },
         events: []
     }).save()
@@ -106,8 +119,21 @@ app.post('/create-event', async (req, res) => {
     res.send(200)
 })
 
-app.post('login-user', (req, res) => {
-    //authenticate(req)
+app.post('/login', async (req, res) => {
+    if(await authenticate(req)){
+        var users = await User.find()
+        users.forEach(async user => {
+            if(user.credentials.username == req.body.username){
+                const cookie = createCookie(res);
+                user.credentials.cookie = cookie
+                user.credentials.authenticated = true;
+                await user.save();
+            }
+        })
+        res.send('done')
+    }else {
+        res.send('denied')
+    }
 })
 
 app.get('/administrar-tareas', (req, res) => {
@@ -116,20 +142,12 @@ app.get('/administrar-tareas', (req, res) => {
 
 
 
-/*
-
-orden de auth
-primero revisar cookie
-despues ver si user existe
-despues ver si la contra coincide
-
-*/
 
 
-/*
-hacer el authentication en cada request, y hacerlo antes de mandar lo que sea
-basicamente, vemos el estado de auth, y dependeindo de este le mandamos un login o el index.html
-*/
+
+
+
+
 
 
 

@@ -18,7 +18,7 @@ const setValues = () => {
 
 const postLogin = async (e) => {
     e.preventDefault();
-    const req = await fetch(baseUrl + 'login-user',
+    const req = await fetch(baseUrl + 'login',
     {
         method: 'POST',
         headers: {
@@ -28,4 +28,7 @@ const postLogin = async (e) => {
     })
 }
 
-submitButton.addEventListener('click', e => postLogin(e))
+submitButton.addEventListener('click', async e => {
+    await postLogin(e)
+    window.location.href = '/'
+})
