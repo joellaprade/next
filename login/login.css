@@ -1,0 +1,29 @@
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: calc(var(--shrink40) * 60);
+    font-weight: 600;
+    margin: calc(var(--shrink40) * 200) 0px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    margin-bottom: calc(var(--shrink40) * 75);
+    border-bottom: calc(var(--shrink40) * 3) solid #e7e7e7;
+}
+
+button {
+    background-color: #181818;
+    padding: calc(var(--shrink40) * 20) calc(var(--shrink40) * 30);
+    border-radius: 5px;
+    border: calc(var(--shrink40) * 3) solid #e7e7e7;;
+}

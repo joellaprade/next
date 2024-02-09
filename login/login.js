@@ -16,9 +16,9 @@ const setValues = () => {
     return modelo;
 }
 
-const postNewUser = async (e) => {
+const postLogin = async (e) => {
     e.preventDefault();
-    const req = await fetch(baseUrl + 'create-user',
+    const req = await fetch(baseUrl + 'login-user',
     {
         method: 'POST',
         headers: {
@@ -28,7 +28,4 @@ const postNewUser = async (e) => {
     })
 }
 
-submitButton.addEventListener('click', async e => {
-    await postNewUser(e)
-    window.location.href = '/'
-})
+submitButton.addEventListener('click', e => postLogin(e))

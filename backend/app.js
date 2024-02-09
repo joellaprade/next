@@ -23,7 +23,7 @@ app.use(cookieParser())
 
 
 
-const createCookie = () => {
+const createCookie = (res) => {
     var year = date.getFullYear().toString();
     var month = date.getMonth().toString();
     var day = date.getDay().toString();
@@ -32,28 +32,41 @@ const createCookie = () => {
     var second = date.getSeconds().toString();
     var random = Math.floor(Math.random()*100).toString();
     var cookie = year+month+day+hour+minute+second+random;
+
+    res.cookie('id', cookie, {
+        maxAge: 80000000,
+        httpOnly: true,
+        secure: true
+    })
+
     return cookie;
 }
 
-const authenticate = async (req) => {
+const authenticate = async (req, res) => {
+    console.log(req.cookies.id)
     if(req.cookies.id){
-        console.log('exists')
+        console.log('ran2')
+        // var users = await User.find();
+        // users.forEach(user => {
+        //     console.log('ran3')
+        //     console.log(user.cookie, req.cookies.id)
+        //     if(user.cookie == req.cookies.id){
+        //         console.log('found');
+        //     }
+        // })
     }else {
-        console.log('doesnt exists')
+        res.sendFile(`${baseDir}/register/register.html`)
+        //mandar login html
+        //no necesariament crear el cookie ahi, sino en register
     }
 }
-
+//createCookie(res);
 //formalizar la creacion y validacion de cookies
 //asignarlas a usuarios para tener event arrqays distintos
 
 
 app.get('/', (req, res) => {
-    authenticate(req);
-    res.cookie('id', createCookie(), {
-        maxAge: 80000000,
-        httpOnly: true,
-        secure: true
-    })
+    //authenticate(req, res);
     res.sendFile(`${baseDir}home.html`);
 })
 
@@ -66,12 +79,12 @@ app.post('/create-user', async (req, res) => {
         credentials: {
             username: req.body.username,
             password: req.body.password,
-            cookie: 'placeholder',
+            cookie: createCookie(res),
             authenticated: false
         },
         events: []
     }).save()
-    res.send(200)
+    res.send('done');
 })
 
 app.post('/create-event', async (req, res) => {
@@ -93,11 +106,24 @@ app.post('/create-event', async (req, res) => {
     res.send(200)
 })
 
+app.post('login-user', (req, res) => {
+    //authenticate(req)
+})
+
 app.get('/administrar-tareas', (req, res) => {
     res.sendFile(`${baseDir}manage-events/manage-events.html`)
 })
 
 
+
+/*
+
+orden de auth
+primero revisar cookie
+despues ver si user existe
+despues ver si la contra coincide
+
+*/
 
 
 /*
