@@ -5,8 +5,8 @@ const User = require('./models/user')
 const app = express();
 const port = 8000;
 const date = new Date()
-const baseDir = `/home/jlaprade/next.jlaprade.com/`;
-// const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
+// const baseDir = `/home/jlaprade/next.jlaprade.com/`;
+const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
 
 const dbURI = 'mongodb+srv://joellaprade:otrXifxg5qxYypK0@nextcluster.gmdlrli.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(dbURI)
@@ -125,6 +125,7 @@ app.post('/login', async (req, res) => {
         users.forEach(async user => {
             if(user.credentials.username == req.body.username){
                 const cookie = createCookie(res);
+                console.log(cookie)
                 user.credentials.cookie = cookie
                 user.credentials.authenticated = true;
                 await user.save();
