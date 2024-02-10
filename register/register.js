@@ -1,4 +1,4 @@
-
+var inputElements = document.querySelectorAll('input')
 var submitButton = document.querySelector('#submit')
 
 var modelo = {
@@ -31,4 +31,10 @@ const postNewUser = async (e) => {
 submitButton.addEventListener('click', async e => {
     await postNewUser(e)
     window.location.href = '/'
+})
+
+input.addEventListener('keydown', e => {
+    if(e.key == 'Enter'){
+        document.body.style.backgroundColor = '#ffffff'
+    }
 })
