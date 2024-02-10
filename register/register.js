@@ -33,9 +33,11 @@ submitButton.addEventListener('click', async e => {
     window.location.href = '/'
 })
 
-input.addEventListener('keydown', e => {
-    e.preventDefault();
-    if(e.key == 'Enter'){
-        document.body.style.backgroundColor = '#ffffff'
-    }
+inputElements.forEach(element => {
+    element.addEventListener('keydown', e => {
+        if(e.key == 'Enter'){
+            e.preventDefault();
+            document.body.style.backgroundColor = '#ffffff'
+        }
+    })
 })
