@@ -303,8 +303,8 @@ const createTag = (model) => {
     var hour = model.start.hour
     var minute = model.start.minute
 
-    hour = hour < 10 ? "0" + hour : hour.toString();
-    minute = minute < 10 ? "0" + minute : minute.toString();
+    hour = hour < 10 ? "0" + hour.toString() : hour.toString();
+    minute = minute < 10 ? "0" + minute.toString() : minute.toString();
 
     return day+hour+minute;
 }
@@ -324,8 +324,8 @@ const setValues = () => {
     model.day = Number(eventDay.value);
     model.start.hour = serverTimeFormat(Number(startHour.value));
     model.start.minute = Number(startMinute.value);
-    model.end.hour = endHour.value ? serverTimeFormat(Number(endHour.value)) : null;
-    model.end.minute = endMinute.value ? Number(endMinute.value) : null;
+    model.end.hour = endHour.value ? serverTimeFormat(Number(endHour.value)) : 0;
+    model.end.minute = endMinute.value ? Number(endMinute.value) : 0;
     model.tag = createTag(model);
 
     return model;
