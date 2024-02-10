@@ -323,7 +323,7 @@ const selectorFunc = (task) => {
 
 const serverTimeFormat = (hour, ampm) => {
     var formatedHour = ampm == 'am' ? hour : hour + 12;
-    if (formatedHour == 24) formatedHour = 12
+    if(formatedHour == 24) formatedHour = 12
 
     return formatedHour;
 }
@@ -349,6 +349,7 @@ const setValues = () => {
     var endMinute = document.querySelector('.end-time').childNodes[5];
     var endAmpm = document.querySelector('.end-time').childNodes[7];
 
+
     model.title = eventTitle.value;
     model.day = Number(eventDay.value);
     model.start.hour = serverTimeFormat(Number(startHour.value), startAmpm.value);
@@ -363,9 +364,9 @@ const setValues = () => {
 
 const verifyData = (model) => {
     model.title = model.title = "" ? "Mi Tarea" : model.title;
-    model.start.hour = model.start.hour > 12 ? 12 : model.start.hour;
+    model.start.hour = model.start.hour > 23 ? 12 : model.start.hour;
     model.start.minute = model.start.minute > 60 ? 12 : model.start.minute;
-    model.end.hour = model.end.hour > 12 ? 12 : model.end.hour;
+    model.end.hour = model.end.hour > 23 ? 12 : model.end.hour;
     model.end.minute = model.end.minute > 60 ? 12 : model.end.minute;
 
     model.start.hour = model.start.hour == NaN ? 0 : model.start.hour;
