@@ -5,8 +5,8 @@ const User = require('./models/user')
 const app = express();
 const port = 8000;
 const date = new Date()
-const baseDir = `/home/jlaprade/next.jlaprade.com/`;
-// const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
+// const baseDir = `/home/jlaprade/next.jlaprade.com/`;
+const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
 
 const dbURI = 'mongodb+srv://joellaprade:otrXifxg5qxYypK0@nextcluster.gmdlrli.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(dbURI)
@@ -113,19 +113,55 @@ app.post('/create-event', async (req, res) => {
     res.send(200)
 })
 
+app.put('/edit-event/:id', async (req, res) => {
+    var eventId = req.params.id;
+    var cookie = req.cookies.id;
+    var event = req.body;
+    var users = await User.find();
+    users.forEach(async user => {
+        if(user.credentials.cookie == cookie){
+            for(i = 0; i < user.events.length; i++){
+                if(user.events[i]._id == eventId){
+                    user.events[i] = event
+                    await user.save();
+                }
+            }
+        }
+    })
+    res.send(200)
+})
+
+app.delete('/delete-event/:id', async (req, res) => {
+    var eventId = req.params.id;
+    var cookie = req.cookies.id;
+    var users = await User.find();
+    console.log(eventId, cookie)
+    users.forEach(async user => {
+        if(user.credentials.cookie == cookie){
+            for(i = 0; i < user.events.length; i++){
+                if(user.events[i]._id == eventId){
+                    console.log(user.events)
+                    user.events.splice(i, 1)
+                    console.log(user.events)
+                    await user.save();
+                }
+            }
+        }
+    })
+    res.send(200)
+})
+
 app.get('/get-events', async (req, res) => {
     var cookie = req.cookies.id;
     var users = await User.find();
     users.forEach(user => {
         if(user.credentials.cookie == cookie){
-            console.log(user.events)
             res.send(user.events)
         }
     })
 })
 
 app.post('/login', async (req, res) => {
-    console.log(await authenticate(req))
     if(await authenticate(req)){
         var users = await User.find()
         users.forEach(async user => {

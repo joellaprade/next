@@ -1,4 +1,4 @@
-
+var inputElements = document.querySelectorAll('input')
 var submitButton = document.querySelector('#submit')
 
 var modelo = {
@@ -31,4 +31,14 @@ const postLogin = async (e) => {
 submitButton.addEventListener('click', async e => {
     await postLogin(e)
     window.location.href = '/'
+})
+
+inputElements.forEach(element => {
+    element.addEventListener('keydown', async e => {
+        if(e.key == 'Enter'){
+            e.preventDefault();
+            await postLogin(e)
+            window.location.href = '/'
+        }
+    })
 })

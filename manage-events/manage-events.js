@@ -8,11 +8,14 @@ var gMinute = date.getMinutes();
 var taskList;
 var selectDays = document.querySelector('.days');
 var colorAnimInterval;
-var editIcon;
-var deleteIcon;
-var isModify = true;
+var iconElements;
+var isModify = false;
 var submitButton = document.querySelector('#submit');
 var events;
+var inputElements = document.querySelectorAll('input')
+var eventBeingEdited;
+var eventBeingDeleted;
+
 
 const toggleFinalHour = () => {
     if(plusIcon.childNodes[1].style.opacity == '0'){
@@ -113,12 +116,12 @@ const renderTasks = () => {
                 <p class="time">${formatTime(segmentedEvents[i].start.hour, segmentedEvents[i].start.minute)} ${formatTime(segmentedEvents[i].end.hour, segmentedEvents[i].end.minute, true)}</p>
             </div>
             
-            <svg id="${segmentedEvents[i]._id}" class="edit-icon" viewBox="0 0 55 42" xmlns="http://www.w3.org/2000/svg">
+            <svg id="${segmentedEvents[i]._id}" class="half-opacity edit-icon icon" viewBox="0 0 55 42" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.13474 35.4289C7.69946 34.863 7.81784 34.0607 8.39915 33.637L16.2932 27.8825C16.8745 27.4587 17.6986 27.574 18.1339 28.1399C18.5691 28.7058 18.4508 29.5081 17.8695 29.9318L9.97541 35.6863C9.3941 36.1101 8.57001 35.9948 8.13474 35.4289Z"/>
                 <path d="M19.4509 25.5808C18.8696 26.0045 18.7513 26.8068 19.1865 27.3727C19.6218 27.9386 20.4459 28.0539 21.0272 27.6301C21.6085 27.2064 21.7269 26.4041 21.2916 25.8382C20.8563 25.2723 20.0322 25.157 19.4509 25.5808Z"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M46.1635 0.511C47.3261 -0.336496 48.9743 -0.106004 49.8448 1.02582L53.7854 6.14918C54.656 7.281 54.4192 8.88556 53.2566 9.73305L49.0465 12.8021C49.0435 12.8043 49.0404 12.8065 49.0373 12.8087L43.7996 16.6269L43.7839 16.6384L11.1517 40.4261C10.8083 40.6764 10.4073 40.8411 9.98357 40.9059L3.04291 41.9674C0.95733 42.2864 -0.644715 40.2035 0.256747 38.345L3.25675 32.1602C3.43991 31.7826 3.71516 31.4543 4.05851 31.204L46.1635 0.511ZM43.5296 5.62934L47.7397 2.56034L51.6804 7.68371L47.4702 10.7527L43.5296 5.62934ZM41.4245 7.16393L40.372 7.93112L44.3126 13.0545L45.3651 12.2873L41.4245 7.16393ZM42.2076 14.5891L9.57543 38.3767L2.63477 39.4382L5.63477 33.2534L38.2669 9.46571L39.4491 11.0027L22.6084 23.2789C22.0271 23.7027 21.9088 24.5049 22.344 25.0709C22.7793 25.6368 23.6034 25.752 24.1847 25.3283L41.0253 13.052L42.2076 14.5891Z"/>
             </svg>
-            <svg id="${segmentedEvents[i]._id}" fill="none" class="delete-icon" viewBox="0 0 39 42" xmlns="http://www.w3.org/2000/svg">
+            <svg id="${segmentedEvents[i]._id}" fill="none" class="half-opacity delete-icon icon" viewBox="0 0 39 42" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.6688 15.6534C12.6377 15.0149 12.0864 14.522 11.4372 14.5525C10.7881 14.583 10.287 15.1254 10.318 15.7639L11.3104 36.2019C11.3414 36.8405 11.8928 37.3334 12.542 37.3029C13.1911 37.2724 13.6922 36.73 13.6612 36.0915L12.6688 15.6534Z"/>
                 <path d="M28.8462 15.7639C28.8772 15.1254 28.3761 14.583 27.7269 14.5525C27.0778 14.522 26.5264 15.0149 26.4954 15.6534L25.503 36.0915C25.4719 36.73 25.973 37.2724 26.6222 37.3029C27.2713 37.3334 27.8227 36.8405 27.8537 36.2019L28.8462 15.7639Z"/>
                 <path d="M20.7584 15.7087C20.7584 15.0694 20.2315 14.5512 19.5816 14.5512C18.9317 14.5512 18.4049 15.0694 18.4049 15.7087V36.2126C18.4049 36.8519 18.9317 37.3701 19.5816 37.3701C20.2315 37.3701 20.7583 36.8519 20.7583 36.2126L20.7584 15.7087Z"/>
@@ -128,6 +131,7 @@ const renderTasks = () => {
     }
 
     taskElements = document.querySelectorAll('.task')
+    iconElements = document.querySelectorAll('.icon')
 
     if(taskElements.length == 0){
         taskList.innerHTML += 
@@ -198,14 +202,21 @@ const trigguer = () => {
     setListeners();
 }
 
-const toggleAddModify = () => {
+const toggleAddModify = (event) => {
+    if(event._id != eventBeingEdited && isModify){
+        fillForm(event)
+        eventBeingEdited = event._id;
+        return;
+    }
     if(isModify){
-        document.querySelector('.form-title').innerText = "Modificar Evento"
-        document.querySelector('#submit').innerText = "Modificar"
-        isModify = false;
-    }else {
         document.querySelector('.form-title').innerText = "Agregar Evento"
         document.querySelector('#submit').innerText = "Agregar"
+        isModify = false;
+    }else {
+        document.querySelector('.form-title').innerText = "Modificar Evento"
+        document.querySelector('#submit').innerText = "Modificar"
+        fillForm(event)
+        eventBeingEdited = event._id;
         isModify = true;
     }
 
@@ -260,22 +271,27 @@ const setListeners = () => {
     editIcons.forEach(icon => {
         icon.addEventListener('click', () => {
             var id = icon.id
+            selectorFunc(icon)
             events.forEach(event => {
-                if(event._id == id){
-                    toggleAddModify();
-                    fillForm(event)
-                } 
+                if(event._id == id ){
+                    toggleAddModify(event);
+                }
             })
         })
     })
 
     deleteIcons.forEach(icon => {
-        var id = Number(icon.id.charAt(1))
-        icon.addEventListener('click', () => {
-            
+        icon.addEventListener('click', e => {
+            var id = icon.id
+            selectorFunc(icon)
+            events.forEach(event => {
+                if(event._id == id){
+                    eventBeingDeleted = id;
+                    deleteEvent(e);
+                }
+            })
         })
     })
-
 }
 
 var model = {
@@ -292,9 +308,23 @@ var model = {
     tag: ''
 }
 
+const selectorFunc = (task) => {
+    if(!task.classList.contains('half-opacity')){
+        task.classList.add('half-opacity')
+        return;
+    }
+    iconElements.forEach(event => {
+        if(!event.classList.contains('half-opacity')){
+            event.classList.add('half-opacity')
+        }
+    })
+    task.classList.remove('half-opacity');
+}
+
 const serverTimeFormat = (hour, ampm) => {
     var formatedHour = ampm == 'am' ? hour : hour + 12;
     if (formatedHour == 24) formatedHour = 12
+
     return formatedHour;
 }
 
@@ -319,28 +349,68 @@ const setValues = () => {
     var endMinute = document.querySelector('.end-time').childNodes[5];
     var endAmpm = document.querySelector('.end-time').childNodes[7];
 
-
     model.title = eventTitle.value;
     model.day = Number(eventDay.value);
-    model.start.hour = serverTimeFormat(Number(startHour.value));
+    model.start.hour = serverTimeFormat(Number(startHour.value), startAmpm.value);
     model.start.minute = Number(startMinute.value);
-    model.end.hour = endHour.value ? serverTimeFormat(Number(endHour.value)) : 0;
+    model.end.hour = endHour.value ? serverTimeFormat(Number(endHour.value), endAmpm.value) : 0;
     model.end.minute = endMinute.value ? Number(endMinute.value) : 0;
+    verifyData(model);
     model.tag = createTag(model);
 
     return model;
 }
 
+const verifyData = (model) => {
+    model.title = model.title = "" ? "Mi Tarea" : model.title;
+    model.start.hour = model.start.hour > 12 ? 12 : model.start.hour;
+    model.start.minute = model.start.minute > 60 ? 12 : model.start.minute;
+    model.end.hour = model.end.hour > 12 ? 12 : model.end.hour;
+    model.end.minute = model.end.minute > 60 ? 12 : model.end.minute;
+
+    model.start.hour = model.start.hour == NaN ? 0 : model.start.hour;
+    model.start.minute = model.start.minute == NaN ? 0 : model.start.minute;
+    model.end.hour = model.end.hour == NaN ? 0 : model.end.hour;
+    model.end.minute = model.end.minute == NaN ? 0 : model.end.minute;
+}
+
+const deleteEvent = async (e) => {
+    e.preventDefault();
+    const req = await fetch(baseUrl + 'delete-event/' + eventBeingDeleted,
+    {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": 'application/json'
+        },
+    })
+    window.location.href = '/administrar'
+}
+
+const editEvent = async (e) => {
+    e.preventDefault();
+    var data = setValues();
+
+    const req = await fetch(baseUrl + 'edit-event/' + eventBeingEdited,
+    {
+        method: 'PUT',
+        headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+}
 
 const postEvent = async (e) => {
     e.preventDefault();
+    var data = setValues();
+
     const req = await fetch(baseUrl + 'create-event',
     {
         method: 'POST',
         headers: {
             "Content-Type": 'application/json'
         },
-        body: JSON.stringify(setValues())
+        body: JSON.stringify(data)
     })
 }
 
@@ -357,10 +427,26 @@ const getEvents = async (e) => {
 }
 
 submitButton.addEventListener('click', async e => {
-    await postEvent(e);
-    window.location.href = '/administrar'
+    e.preventDefault()
+    if(isModify){
+        await editEvent(e);
+        window.location.href = '/administrar'
+    }else {
+        await postEvent(e);
+        window.location.href = '/administrar'
+    }
 })
 
-window.addEventListener('load', e => {
-    getEvents(e);
+window.addEventListener('load', async e => {
+    await getEvents(e);
+})
+
+inputElements.forEach(element => {
+    element.addEventListener('keydown', async e => {
+        if(e.key == 'Enter'){
+            e.preventDefault();
+            await postNewUser(e)
+            window.location.href = '/administrar'
+        }
+    })
 })

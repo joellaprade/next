@@ -200,6 +200,14 @@ section {
     opacity: 0;
 }
 
+.half-opacity {
+    opacity: 0.5;
+}
+
+.half-opacity * {
+    opacity: 0.5;
+}
+
 .focus-selection * {
     opacity: 0.5;
     transition: opacity 0.3s ease-in-out;

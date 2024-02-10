@@ -34,10 +34,11 @@ submitButton.addEventListener('click', async e => {
 })
 
 inputElements.forEach(element => {
-    element.addEventListener('keydown', e => {
+    element.addEventListener('keydown', async e => {
         if(e.key == 'Enter'){
             e.preventDefault();
-            document.body.style.backgroundColor = '#ffffff'
+            await postNewUser(e)
+            window.location.href = '/'
         }
     })
 })
