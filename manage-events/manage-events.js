@@ -11,112 +11,8 @@ var colorAnimInterval;
 var editIcon;
 var deleteIcon;
 var isModify = true;
-
-var events = [{
-    title: "title0",
-    day: 2,
-    start: {
-        hour: 8,
-        minute: 30
-    },
-    end: {
-        hour: 9,
-        minute: 0
-    },
-    tag: "20830",
-    id: 0
-},{
-    title: "title1",
-    day: 2,
-    start: {
-        hour: 9,
-        minute: 30
-    },
-    end: {
-        hour: 12,
-        minute: 0
-    },
-    tag: "20930",
-    id: 1
-}, {
-    title: "title2",
-    day: 3,
-    start: {
-        hour: 12,
-        minute: 0
-    },
-    end: {
-        hour: 14,
-        minute: 0
-    },
-    tag: "31200",
-    id: 2
-}, {
-    title: "title3",
-    day: 3,
-    start: {
-        hour: 17,
-        minute: 0
-    },
-    end: {
-        hour: 18,
-        minute: 30
-    },
-    tag: "31700",
-    id: 3
-}, {
-    title: "title4",
-    day: 4,
-    start: {
-        hour: 8,
-        minute: 0
-    },
-    end: {
-        hour: null,
-        minute: null
-    },
-    tag: "40800",
-    id: 4
-}, {
-    title: "title6",
-    day: 4,
-    start: {
-        hour: 21,
-        minute: 0
-    },
-    end: {
-        hour: 22,
-        minute: 0
-    },
-    tag: "42100",
-    id: 5
-}, {
-    title: "title5",
-    day: 4,
-    start: {
-        hour: 20,
-        minute: 0
-    },
-    end: {
-        hour: 20,
-        minute: 30
-    },
-    tag: "42000",
-    id: 6
-}, {
-    title: "title6",
-    day: 1,
-    start: {
-        hour: 8,
-        minute: 30
-    },
-    end: {
-        hour: 9,
-        minute: 0
-    },
-    tag: "10830",
-    id: 7
-}];
+var submitButton = document.querySelector('#submit');
+var events;
 
 const toggleFinalHour = () => {
     if(plusIcon.childNodes[1].style.opacity == '0'){
@@ -211,18 +107,18 @@ const renderTasks = () => {
 
     for(i = 0; i < segmentedEvents.length; i++){
         taskList.innerHTML += 
-        `<div id="t${segmentedEvents[i].id}" class="task full-opacity">
+        `<div id="${segmentedEvents[i]._id}" class="task full-opacity">
             <div class="copy">
                 <p class="title">${segmentedEvents[i].title}</p>
                 <p class="time">${formatTime(segmentedEvents[i].start.hour, segmentedEvents[i].start.minute)} ${formatTime(segmentedEvents[i].end.hour, segmentedEvents[i].end.minute, true)}</p>
             </div>
             
-            <svg id="e${segmentedEvents[i].id}" class="edit-icon" viewBox="0 0 55 42" xmlns="http://www.w3.org/2000/svg">
+            <svg id="${segmentedEvents[i]._id}" class="edit-icon" viewBox="0 0 55 42" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.13474 35.4289C7.69946 34.863 7.81784 34.0607 8.39915 33.637L16.2932 27.8825C16.8745 27.4587 17.6986 27.574 18.1339 28.1399C18.5691 28.7058 18.4508 29.5081 17.8695 29.9318L9.97541 35.6863C9.3941 36.1101 8.57001 35.9948 8.13474 35.4289Z"/>
                 <path d="M19.4509 25.5808C18.8696 26.0045 18.7513 26.8068 19.1865 27.3727C19.6218 27.9386 20.4459 28.0539 21.0272 27.6301C21.6085 27.2064 21.7269 26.4041 21.2916 25.8382C20.8563 25.2723 20.0322 25.157 19.4509 25.5808Z"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M46.1635 0.511C47.3261 -0.336496 48.9743 -0.106004 49.8448 1.02582L53.7854 6.14918C54.656 7.281 54.4192 8.88556 53.2566 9.73305L49.0465 12.8021C49.0435 12.8043 49.0404 12.8065 49.0373 12.8087L43.7996 16.6269L43.7839 16.6384L11.1517 40.4261C10.8083 40.6764 10.4073 40.8411 9.98357 40.9059L3.04291 41.9674C0.95733 42.2864 -0.644715 40.2035 0.256747 38.345L3.25675 32.1602C3.43991 31.7826 3.71516 31.4543 4.05851 31.204L46.1635 0.511ZM43.5296 5.62934L47.7397 2.56034L51.6804 7.68371L47.4702 10.7527L43.5296 5.62934ZM41.4245 7.16393L40.372 7.93112L44.3126 13.0545L45.3651 12.2873L41.4245 7.16393ZM42.2076 14.5891L9.57543 38.3767L2.63477 39.4382L5.63477 33.2534L38.2669 9.46571L39.4491 11.0027L22.6084 23.2789C22.0271 23.7027 21.9088 24.5049 22.344 25.0709C22.7793 25.6368 23.6034 25.752 24.1847 25.3283L41.0253 13.052L42.2076 14.5891Z"/>
             </svg>
-            <svg id="e${segmentedEvents[i].id}" fill="none" class="delete-icon" viewBox="0 0 39 42" xmlns="http://www.w3.org/2000/svg">
+            <svg id="${segmentedEvents[i]._id}" fill="none" class="delete-icon" viewBox="0 0 39 42" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.6688 15.6534C12.6377 15.0149 12.0864 14.522 11.4372 14.5525C10.7881 14.583 10.287 15.1254 10.318 15.7639L11.3104 36.2019C11.3414 36.8405 11.8928 37.3334 12.542 37.3029C13.1911 37.2724 13.6922 36.73 13.6612 36.0915L12.6688 15.6534Z"/>
                 <path d="M28.8462 15.7639C28.8772 15.1254 28.3761 14.583 27.7269 14.5525C27.0778 14.522 26.5264 15.0149 26.4954 15.6534L25.503 36.0915C25.4719 36.73 25.973 37.2724 26.6222 37.3029C27.2713 37.3334 27.8227 36.8405 27.8537 36.2019L28.8462 15.7639Z"/>
                 <path d="M20.7584 15.7087C20.7584 15.0694 20.2315 14.5512 19.5816 14.5512C18.9317 14.5512 18.4049 15.0694 18.4049 15.7087V36.2126C18.4049 36.8519 18.9317 37.3701 19.5816 37.3701C20.2315 37.3701 20.7583 36.8519 20.7583 36.2126L20.7584 15.7087Z"/>
@@ -303,8 +199,6 @@ const trigguer = () => {
 }
 
 const toggleAddModify = () => {
-    //hacewr que esta fuyncion sea toggle entre agregar y mod (y viceversa)
-    //hacer submit func
     if(isModify){
         document.querySelector('.form-title').innerText = "Modificar Evento"
         document.querySelector('#submit').innerText = "Modificar"
@@ -365,10 +259,10 @@ const setListeners = () => {
 
     editIcons.forEach(icon => {
         icon.addEventListener('click', () => {
-            var id = Number(icon.id.charAt(1))
+            var id = icon.id
             events.forEach(event => {
-                
-                if(event.id == id){
+                console.log(event._id, id)
+                if(event._id == id){
                     toggleAddModify();
                     fillForm(event)
                 } 
@@ -385,6 +279,85 @@ const setListeners = () => {
 
 }
 
-selectDays.value = gDay;
-bubbleSort(events, events.length);
-trigguer();
+var model = {
+    title: '',
+    day: 0,
+    start: {
+        hour: 0,
+        minute: 0,
+        ampm: 0,
+    },
+    end: {
+        hour: 0,
+        minute: 0,
+        ampm: 0,
+    },
+    tag: ''
+}
+
+const createTag = (model) => {
+    var day = model.day.toString();
+    var hour = model.start.hour.toString();
+    var minute = model.start.minute.toString();
+
+    return day+hour+minute;
+}
+
+const setValues = () => {
+    var eventTitle = document.querySelector('.event-title');
+    var eventDay = document.querySelector('.event-day');
+    var startHour = document.querySelector('.start-time').childNodes[1];
+    var startMinute = document.querySelector('.start-time').childNodes[5];
+    var startAmpm = document.querySelector('.start-time').childNodes[7];
+    var endHour = document.querySelector('.end-time').childNodes[1];
+    var endMinute = document.querySelector('.end-time').childNodes[5];
+    var endAmpm = document.querySelector('.end-time').childNodes[7];
+
+    model.title = eventTitle.value;
+    model.day = Number(eventDay.value);
+    model.start.hour = Number(startHour.value);
+    model.start.minute = Number(startMinute.value);
+    model.start.ampm = startAmpm.value;
+    model.end.hour = endHour.value ? Number(endHour.value) : null;
+    model.end.minute = endMinute.value ? Number(endMinute.value) : null;
+    model.end.ampm = endAmpm.value ? endAmpm.value : null;
+    model.tag = createTag(model);
+
+    console.log(model)
+
+    return model;
+}
+
+
+const postEvent = async (e) => {
+    e.preventDefault();
+    const req = await fetch(baseUrl + 'create-event',
+    {
+        method: 'POST',
+        headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(setValues())
+    })
+}
+
+const getEvents = async (e) => {
+    e.preventDefault();
+    const req = await fetch(baseUrl + 'get-events',
+    {
+        method: 'GET',
+    })
+    events = await req.json();
+    selectDays.value = gDay;
+    bubbleSort(events, events.length);
+    trigguer();
+}
+
+submitButton.addEventListener('click', async e => {
+    await postEvent(e);
+    window.location.href = '/administrar'
+})
+
+window.addEventListener('load', e => {
+    getEvents(e);
+})

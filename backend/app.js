@@ -101,22 +101,27 @@ app.post('/create-user', async (req, res) => {
 })
 
 app.post('/create-event', async (req, res) => {
-    var user = await User.find();
-    user[0].events.push({
-        title: 'Evento 1',
-        day: 1,
-        start: {
-            hour: 8,
-            minute: 30
-        },
-        end: {
-            hour: 9,
-            minute: 0
-        },
-        tag: '232352'
-    });
-    await user[0].save();
+    var cookie = req.cookies.id;
+    var event = req.body;
+    var users = await User.find();
+    users.forEach(async user => {
+        if(user.credentials.cookie == cookie){
+            user.events.push(event);
+            await user.save();
+        }
+    })
     res.send(200)
+})
+
+app.get('/get-events', async (req, res) => {
+    var cookie = req.cookies.id;
+    var users = await User.find();
+    users.forEach(user => {
+        if(user.credentials.cookie == cookie){
+            console.log(user.events)
+            res.send(user.events)
+        }
+    })
 })
 
 app.post('/login', async (req, res) => {
@@ -125,7 +130,6 @@ app.post('/login', async (req, res) => {
         users.forEach(async user => {
             if(user.credentials.username == req.body.username){
                 const cookie = createCookie(res);
-                console.log(cookie)
                 user.credentials.cookie = cookie
                 user.credentials.authenticated = true;
                 await user.save();
@@ -137,41 +141,10 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.get('/administrar-tareas', (req, res) => {
-    res.sendFile(`${baseDir}manage-events/manage-events.html`)
+app.get('/administrar', async (req, res) => {
+    if(await isLogged(req)){
+        res.sendFile(`${baseDir}manage-events/manage-events.html`)
+    }else{
+        res.sendFile(`${baseDir}login/login.html`);
+    } 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-await new User({
-        credentials: {
-            username: 'jlaprade',
-            password: 'today2428',
-            cookie: 'eiodfjgposdfg',
-            authenticated: 'false'
-        },
-        events: [{
-            title: 'Evento 1',
-            day: 1,
-            start: {
-                hour: 8,
-                minute: 30
-            },
-            end: {
-                hour: 9,
-                minute: 0
-            },
-            tag: '232352'
-        }]
-    }).save()
-*/

@@ -14,111 +14,7 @@ var loadingIcon = `
 <use href="#effect" class="rotate2"></use>`;
 var fillerIcon = `<svg class="svg-filler"></svg>`;
 
-var events = [{
-    title: "title0",
-    day: 2,
-    start: {
-        hour: 8,
-        minute: 30
-    },
-    end: {
-        hour: 9,
-        minute: 0
-    },
-    tag: "20830",
-    id: 0
-},{
-    title: "title1",
-    day: 2,
-    start: {
-        hour: 9,
-        minute: 30
-    },
-    end: {
-        hour: 12,
-        minute: 0
-    },
-    tag: "20930",
-    id: 1
-}, {
-    title: "title2",
-    day: 3,
-    start: {
-        hour: 12,
-        minute: 0
-    },
-    end: {
-        hour: 14,
-        minute: 0
-    },
-    tag: "31200",
-    id: 2
-}, {
-    title: "title3",
-    day: 3,
-    start: {
-        hour: 17,
-        minute: 0
-    },
-    end: {
-        hour: 18,
-        minute: 30
-    },
-    tag: "31700",
-    id: 3
-}, {
-    title: "title4",
-    day: 4,
-    start: {
-        hour: 8,
-        minute: 0
-    },
-    end: {
-        hour: null,
-        minute: null
-    },
-    tag: "40800",
-    id: 4
-}, {
-    title: "title6",
-    day: 4,
-    start: {
-        hour: 21,
-        minute: 0
-    },
-    end: {
-        hour: 22,
-        minute: 0
-    },
-    tag: "42100",
-    id: 5
-}, {
-    title: "title5",
-    day: 4,
-    start: {
-        hour: 20,
-        minute: 0
-    },
-    end: {
-        hour: 20,
-        minute: 30
-    },
-    tag: "42000",
-    id: 6
-}, {
-    title: "title6",
-    day: 1,
-    start: {
-        hour: 8,
-        minute: 30
-    },
-    end: {
-        hour: 9,
-        minute: 0
-    },
-    tag: "10830",
-    id: 7
-}];
+var events;
 
 const bubbleSort = (arr, n) => {
     var i, j, temp;
@@ -238,7 +134,8 @@ const scrollToPresentTask = () => {
     for(i = 0; i < taskElements.length; i++){
         if(!taskElements[i].classList.contains('half-opacity')){
             var multiplier = i == taskElements.length ? i : i - 1;
-            taskList.scrollTop = multiplier * taskElements[i].offsetHeight
+            var extra = taskElements.length - 1 == i ? taskElements[i].offsetHeight : 0;
+            taskList.scrollTop = multiplier * taskElements[i].offsetHeight + extra
             break;
         }
     }
@@ -307,8 +204,7 @@ const setListeners = () => {
     
     document.querySelectorAll('.loading-icon').forEach(icon => {
         icon.addEventListener('click', () => {
-            
-            if(icon.innerHTML == loadingIcon){
+            if(icon.innerHTML != checkIcon){
                 icon.innerHTML = checkIcon
             }else {
                 icon.innerHTML = loadingIcon
@@ -317,11 +213,19 @@ const setListeners = () => {
     })
 }
 
+const getEvents = async (e) => {
+    e.preventDefault();
+    const req = await fetch(baseUrl + 'get-events',
+    {
+        method: 'GET',
+    })
+    events = await req.json();
+    selectDays.value = gDay;
+    bubbleSort(events, events.length);
+    trigguer();
+}
 
 
-
-
-selectDays.value = gDay;
-bubbleSort(events, events.length);
-trigguer();
-setListeners();
+window.addEventListener('load', e => {
+    getEvents(e);
+})

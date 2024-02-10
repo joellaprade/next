@@ -14,11 +14,13 @@ const userSchema = new Schema({
             day: Number,
             start: {
                 hour: Number,
-                minute: Number
+                minute: Number,
+                ampm: String
             },
             end: {
                 hour: Number,
-                minute: Number
+                minute: Number,
+                ampm: String
             },
             tag: String
         }],
