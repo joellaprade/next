@@ -353,8 +353,8 @@ const setValues = () => {
     model.day = Number(eventDay.value);
     model.start.hour = serverTimeFormat(Number(startHour.value), startAmpm.value);
     model.start.minute = Number(startMinute.value);
-    model.end.hour = endHour.value ? serverTimeFormat(Number(endHour.value), endAmpm.value) : 0;
-    model.end.minute = endMinute.value ? Number(endMinute.value) : 0;
+    model.end.hour = serverTimeFormat(Number(endHour.value), endAmpm.value);
+    model.end.minute = Number(endMinute.value);
     verifyData(model);
     model.tag = createTag(model);
 
