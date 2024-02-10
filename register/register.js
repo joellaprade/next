@@ -34,6 +34,7 @@ submitButton.addEventListener('click', async e => {
 })
 
 input.addEventListener('keydown', e => {
+    e.preventDefault();
     if(e.key == 'Enter'){
         document.body.style.backgroundColor = '#ffffff'
     }
