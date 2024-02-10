@@ -5,8 +5,8 @@ const User = require('./models/user')
 const app = express();
 const port = 8000;
 const date = new Date()
-const baseDir = `/home/jlaprade/next.jlaprade.com/`;
-// const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
+// const baseDir = `/home/jlaprade/next.jlaprade.com/`;
+const baseDir = `C:\\Users\\dell user 2\\Documents\\GitHub\\next\\`;
 
 const dbURI = 'mongodb+srv://joellaprade:otrXifxg5qxYypK0@nextcluster.gmdlrli.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(dbURI)
@@ -56,8 +56,8 @@ const isLogged = async (req) => {
 const authenticate = async (req) => {
     var username = req.body.username;
     var password = req.body.password;
-    var users = await User.find();
     var authenticated = false
+    var users = await User.find();
     users.forEach(user => {
         if(username == user.credentials.username){
             if(password == user.credentials.password){
@@ -125,6 +125,7 @@ app.get('/get-events', async (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
+    console.log(await authenticate(req))
     if(await authenticate(req)){
         var users = await User.find()
         users.forEach(async user => {

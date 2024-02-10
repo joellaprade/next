@@ -88,7 +88,7 @@ const determineState = (event) => {
     }else if (actualTimeTag("hourminute") > startHour+startMinute
         && actualTimeTag("hourminute") < endHour+endMinute){
         return 'present'
-    }else if(actualTimeTag("hourminute") > endHour+endMinute){
+    }else if(actualTimeTag("hourminute") > endHour+endMinute && event.end.hour != null){
         return 'past'
     }else {
         return 'future'
@@ -261,7 +261,6 @@ const setListeners = () => {
         icon.addEventListener('click', () => {
             var id = icon.id
             events.forEach(event => {
-                console.log(event._id, id)
                 if(event._id == id){
                     toggleAddModify();
                     fillForm(event)
@@ -285,20 +284,27 @@ var model = {
     start: {
         hour: 0,
         minute: 0,
-        ampm: 0,
     },
     end: {
         hour: 0,
         minute: 0,
-        ampm: 0,
     },
     tag: ''
 }
 
+const serverTimeFormat = (hour, ampm) => {
+    var formatedHour = ampm == 'am' ? hour : hour + 12;
+    if (formatedHour == 24) formatedHour = 12
+    return formatedHour;
+}
+
 const createTag = (model) => {
-    var day = model.day.toString();
-    var hour = model.start.hour.toString();
-    var minute = model.start.minute.toString();
+    var day = model.day
+    var hour = model.start.hour
+    var minute = model.start.minute
+
+    hour = hour < 10 ? "0" + hour : hour.toString();
+    minute = minute < 10 ? "0" + minute : minute.toString();
 
     return day+hour+minute;
 }
@@ -313,17 +319,14 @@ const setValues = () => {
     var endMinute = document.querySelector('.end-time').childNodes[5];
     var endAmpm = document.querySelector('.end-time').childNodes[7];
 
+
     model.title = eventTitle.value;
     model.day = Number(eventDay.value);
-    model.start.hour = Number(startHour.value);
+    model.start.hour = serverTimeFormat(Number(startHour.value));
     model.start.minute = Number(startMinute.value);
-    model.start.ampm = startAmpm.value;
-    model.end.hour = endHour.value ? Number(endHour.value) : null;
+    model.end.hour = endHour.value ? serverTimeFormat(Number(endHour.value)) : null;
     model.end.minute = endMinute.value ? Number(endMinute.value) : null;
-    model.end.ampm = endAmpm.value ? endAmpm.value : null;
     model.tag = createTag(model);
-
-    console.log(model)
 
     return model;
 }

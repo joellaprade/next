@@ -1,2 +1,2 @@
-const baseUrl = 'https://next.jlaprade.com/'
-// const baseUrl = 'http://localhost:8000/'
+// const baseUrl = 'https://next.jlaprade.com/'
+const baseUrl = 'http://localhost:8000/'
