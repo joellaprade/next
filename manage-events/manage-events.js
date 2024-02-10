@@ -86,12 +86,13 @@ const determineState = (event) => {
     var startMinute = event.start.minute >= 10 ? event.start.minute.toString() : "0"+event.start.minute
     var endHour = event.end.hour >= 10 ? event.end.hour.toString() : "0"+event.end.hour
     var endMinute = event.end.minute >= 10 ? event.end.minute.toString() : "0"+event.end.minute
-    if(actualTimeTag('hourminute') > startHour && event.end.hour == null){
+    console.log(actualTimeTag("hourminute"), startHour)
+    if(actualTimeTag('hourminute') > startHour && event.end.hour == 0){
         return 'present'
     }else if (actualTimeTag("hourminute") > startHour+startMinute
         && actualTimeTag("hourminute") < endHour+endMinute){
         return 'present'
-    }else if(actualTimeTag("hourminute") > endHour+endMinute && event.end.hour != null){
+    }else if(actualTimeTag("hourminute") > endHour+endMinute && event.end.hour != 0){
         return 'past'
     }else {
         return 'future'
