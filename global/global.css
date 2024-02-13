@@ -131,6 +131,10 @@ select {
     opacity: 0.5;
 }
 
+.full-opacity {
+    opacity: 0;
+}
+
 
 
 /* TOOLS */

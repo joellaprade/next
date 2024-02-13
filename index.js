@@ -109,7 +109,7 @@ const renderTasks = () => {
     for(i = 0; i < segmentedEvents.length; i++){
         var state = determineState(segmentedEvents[i]);
         taskList.innerHTML += 
-        `<div id="task${segmentedEvents.id}" class="task ${determineState(segmentedEvents[i]) == 'present' ? '' : 'half-opacity'} full-opacity">
+        `<div id="task${segmentedEvents.id}" class="task full-opacity ${determineState(segmentedEvents[i]) == 'present' ? '' : 'half-opacity'} full-opacity">
             <div class="copy">
                 <p class="title">${segmentedEvents[i].title}</p>
                 <p class="time">${formatTime(segmentedEvents[i].start.hour, segmentedEvents[i].start.minute)} ${formatTime(segmentedEvents[i].end.hour, segmentedEvents[i].end.minute, true)}</p>
@@ -153,7 +153,7 @@ const showElements = () => {
         taskElements[counter].classList.remove("full-opacity");
         counter++;
         if(counter == taskElements.length) clearInterval(interval)
-    },1);
+    },75);
     document.querySelectorAll('svg')
         .forEach(svg => svg.style.fill = '#181818')
     colorAnimation();

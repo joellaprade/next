@@ -37,9 +37,9 @@ body {
     box-sizing: border-box;
 }
 
-.task-list * {
+/* .task-list * {
     color: #181818;
-}
+} */
 
 .gradient-top {
     position: absolute;
