@@ -153,7 +153,7 @@ const showElements = () => {
         taskElements[counter].classList.remove("full-opacity");
         counter++;
         if(counter == taskElements.length) clearInterval(interval)
-    },1000);
+    },1);
     document.querySelectorAll('svg')
         .forEach(svg => svg.style.fill = '#181818')
     colorAnimation();
