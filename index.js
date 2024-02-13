@@ -133,9 +133,8 @@ const renderTasks = () => {
 const scrollToPresentTask = () => {
     for(i = 0; i < taskElements.length; i++){
         if(!taskElements[i].classList.contains('half-opacity')){
-            var multiplier = i == taskElements.length ? i : i - 1;
             var extra = taskElements.length - 1 == i ? taskElements[i].offsetHeight : 0;
-            taskList.scrollTop = multiplier * taskElements[i].offsetHeight + extra
+            taskList.scrollTop = i * taskElements[i].offsetHeight + extra
             break;
         }
     }
