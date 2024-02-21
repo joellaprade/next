@@ -131,12 +131,17 @@ const renderTasks = () => {
 }
 
 const scrollToPresentTask = () => {
+    var totalScroll = 0;
     for(i = 0; i < taskElements.length; i++){
+        var elementStyle = window.getComputedStyle(taskElements[i]);
+        var marginTop = Number(elementStyle.marginTop.slice(0,-2));
+        var height = Number(elementStyle.height.slice(0,-2));
+        var paddingBottom = Number(elementStyle.paddingBottom.slice(0,-2));
         if(!taskElements[i].classList.contains('half-opacity')){
-            var extra = taskElements.length - 1 == i ? taskElements[i].offsetHeight * 6 : 0;
-            taskList.scrollTop = (i + 1) * taskElements[i].offsetHeight + extra
+            taskList.scrollTop = totalScroll;
             break;
         }
+        totalScroll += marginTop + height + paddingBottom;
     }
 }
 
