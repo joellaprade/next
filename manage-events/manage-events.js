@@ -57,7 +57,6 @@ const formatTime = (_hour, _minute, hasDash) => {
     var dash = hasDash ? ' - ' : '';
 
     return dash+tempHour+":"+tempMinute+ampm;
-    
 }
 
 const actualTimeTag = (value) => {

@@ -42,11 +42,10 @@ const formatTime = (_hour, _minute, hasDash) => {
     if(!_hour) return "";
     var tempHour = _hour > 12 ? (_hour - 12).toString() : _hour.toString();
     var tempMinute = _minute < 10 ? "0" + _minute : _minute.toString();
-    var ampm = _hour <= 12 ? 'am' : 'pm'
+    var ampm = _hour < 12 ? 'am' : 'pm'
     var dash = hasDash ? ' - ' : '';
 
     return dash+tempHour+":"+tempMinute+ampm;
-    
 }
 
 const actualTimeTag = (value) => {
